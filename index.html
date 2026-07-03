@@ -101,7 +101,7 @@
         border-radius: 50%;
         background: var(--orange);
         opacity: 0;
-        z-index: 1;
+        z-index: 3;
         pointer-events: none;
         animation: rise linear infinite;
       }
@@ -1090,6 +1090,67 @@
           transform: none;
         }
       }
+
+      /* ---------- hero scroll cinema ---------- */
+      .hero-cin {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        background: linear-gradient(180deg, #0e0e13 0%, #0b0b0e 70%, #0a0a0c 100%);
+        transform-origin: 50% 0%;
+        will-change: transform, filter, border-radius;
+        padding-bottom: 40px;
+      }
+      .page-rest {
+        position: relative;
+        z-index: 2;
+        background: var(--bg);
+        border-top: 1px solid rgba(255, 106, 26, 0.28);
+        border-radius: 26px 26px 0 0;
+        box-shadow: 0 -30px 90px -25px rgba(255, 90, 0, 0.35);
+      }
+      .page-rest::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(520px, 60vw);
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--orange), transparent);
+        opacity: 0.8;
+        pointer-events: none;
+      }
+      .page-rest .deep-glow {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        border-radius: inherit;
+      }
+      .page-rest .deep-glow::before,
+      .page-rest .deep-glow::after {
+        content: "";
+        position: absolute;
+        width: 55vw;
+        height: 55vw;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.3;
+      }
+      .page-rest .deep-glow::before {
+        background: radial-gradient(circle, rgba(255, 106, 26, 0.14), transparent 65%);
+        top: 8%;
+        right: -22vw;
+      }
+      .page-rest .deep-glow::after {
+        background: radial-gradient(circle, rgba(255, 61, 0, 0.1), transparent 65%);
+        bottom: 4%;
+        left: -18vw;
+      }
+      .page-rest > * {
+        position: relative;
+      }
     </style>
   </head>
   <body>
@@ -1100,260 +1161,266 @@
     <div class="grid-overlay"></div>
 
     <main>
-      <div class="wrap">
-        <nav>
-          <div class="logo">WEBRAND<span>IT</span></div>
-          <div class="nav-badge"><span class="dot"></span>FREE 2-MINUTE GAP SCORE</div>
-        </nav>
+      <div class="hero-cin" id="heroCin">
+        <div class="wrap">
+          <nav>
+            <div class="logo">WEBRAND<span>IT</span></div>
+            <div class="nav-badge"><span class="dot"></span>FREE 2-MINUTE GAP SCORE</div>
+          </nav>
 
-        <!-- ============ HERO ============ -->
-        <header class="hero">
-          <div class="eyebrow">For Service Business Owners</div>
-          <h1>
-            Your Business Is Leaking Customers <span class="burn">Every Single Day.</span><br />We'll Show You Exactly
-            Where.
-          </h1>
-          <p class="sub">
-            Answer a few quick questions and get your free <strong>Gap Score</strong> — a brutally honest breakdown of
-            the hidden holes costing you paying customers right now. <strong>Watch the short video first.</strong>
-          </p>
+          <!-- ============ HERO ============ -->
+          <header class="hero">
+            <div class="eyebrow">For Service Business Owners</div>
+            <h1>
+              Your Business Is Leaking Customers <span class="burn">Every Single Day.</span><br />We'll Show You Exactly
+              Where.
+            </h1>
+            <p class="sub">
+              Answer a few quick questions and get your free <strong>Gap Score</strong> — a brutally honest breakdown of
+              the hidden holes costing you paying customers right now. <strong>Watch the short video first.</strong>
+            </p>
 
-          <div class="vsl-shell">
-            <div class="vsl-frame" id="vsl" onclick="playVSL()">
-              <div class="vsl-inner">
-                <div class="play-btn">
-                  <svg width="30" height="34" viewBox="0 0 30 34" fill="none">
+            <div class="vsl-shell">
+              <div class="vsl-frame" id="vsl" onclick="playVSL()">
+                <div class="vsl-inner">
+                  <div class="play-btn">
+                    <svg width="30" height="34" viewBox="0 0 30 34" fill="none">
+                      <path
+                        d="M28 15.27C29.33 16.04 29.33 17.96 28 18.73L3 33.16C1.67 33.93 0 32.97 0 31.43V2.57C0 1.03 1.67 .07 3 .84L28 15.27Z"
+                        fill="#0a0a0c"
+                      />
+                    </svg>
+                  </div>
+                  <div class="vsl-label">Watch: Where Your Customers Are Going Instead</div>
+                  <div class="vsl-length">▸ 4:37</div>
+                </div>
+                <div class="vsl-playing-state">
+                  <div class="eq"><span></span><span></span><span></span><span></span><span></span></div>
+                  <div class="vsl-note">VIDEO PLAYING — YOUR VSL EMBEDS HERE</div>
+                </div>
+                <div class="vsl-progress" id="vslProgress"></div>
+              </div>
+
+              <div class="cta-zone">
+                <button class="cta-main cta-hidden" id="mainCta" onclick="openModal()">
+                  Get My Free Gap Score
+                  <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
                     <path
-                      d="M28 15.27C29.33 16.04 29.33 17.96 28 18.73L3 33.16C1.67 33.93 0 32.97 0 31.43V2.57C0 1.03 1.67 .07 3 .84L28 15.27Z"
-                      fill="#0a0a0c"
+                      d="M12 1L19 8L12 15M19 8H1"
+                      stroke="#0a0a0c"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
                     />
                   </svg>
+                </button>
+                <div class="cta-sub cta-hidden" id="ctaSub">
+                  Takes <b>2 minutes</b> · Instant results · <b>100% free</b>
                 </div>
-                <div class="vsl-label">Watch: Where Your Customers Are Going Instead</div>
-                <div class="vsl-length">▸ 4:37</div>
-              </div>
-              <div class="vsl-playing-state">
-                <div class="eq"><span></span><span></span><span></span><span></span><span></span></div>
-                <div class="vsl-note">VIDEO PLAYING — YOUR VSL EMBEDS HERE</div>
-              </div>
-              <div class="vsl-progress" id="vslProgress"></div>
-            </div>
-
-            <div class="cta-zone">
-              <button class="cta-main cta-hidden" id="mainCta" onclick="openModal()">
-                Get My Free Gap Score
-                <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
-                  <path
-                    d="M12 1L19 8L12 15M19 8H1"
-                    stroke="#0a0a0c"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button>
-              <div class="cta-sub cta-hidden" id="ctaSub">
-                Takes <b>2 minutes</b> · Instant results · <b>100% free</b>
               </div>
             </div>
-          </div>
-        </header>
-      </div>
-
-      <!-- ============ TICKER ============ -->
-      <div class="ticker">
-        <div class="ticker-track" id="tickerTrack">
-          <span>◆ SLOW FOLLOW-UP KILLS <b>UP TO 40%</b> OF INBOUND LEADS</span>
-          <span>◆ <b>75%</b> OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE</span>
-          <span>◆ MOST VISITORS DECIDE IN <b>UNDER 5 SECONDS</b></span>
-          <span>◆ YOUR COMPETITORS ARE <b>ONE GOOGLE SEARCH</b> AWAY</span>
-          <span>◆ REVIEWS DRIVE <b>THE MAJORITY</b> OF LOCAL BUYING DECISIONS</span>
+          </header>
         </div>
       </div>
 
-      <div class="wrap">
-        <!-- ============ THE 5 LEAKS ============ -->
-        <section>
-          <div class="sec-eyebrow rv">The Diagnosis</div>
-          <h2 class="rv d1">Five Places Your Money Is <span class="hl">Walking Out The Door</span></h2>
-          <p class="lead rv d2">
-            Every service business leaks from the same five places. Most owners can't see them — because you can't see
-            the customers who never called. Your Gap Score measures all five.
-          </p>
+      <div class="page-rest" id="pageRest">
+        <div class="deep-glow" aria-hidden="true"></div>
 
-          <div class="leak-grid">
-            <div class="leak-card rv d1">
-              <div class="leak-num">LEAK / 01</div>
-              <div class="leak-icon">🕳️</div>
-              <h3>The Invisible Website</h3>
-              <p>
-                People land on your site, look for a reason to trust you, don't find one fast enough — and hit the back
-                button. <b>You never even know they came.</b>
-              </p>
-            </div>
-            <div class="leak-card rv d2">
-              <div class="leak-num">LEAK / 02</div>
-              <div class="leak-icon">📉</div>
-              <h3>The Traffic Drought</h3>
-              <p>
-                You're great at what you do, but the people searching for it right now are finding someone else.
-                <b>Being the best means nothing if you're invisible.</b>
-              </p>
-            </div>
-            <div class="leak-card rv d3">
-              <div class="leak-num">LEAK / 03</div>
-              <div class="leak-icon">⏱️</div>
-              <h3>The Slow Reply</h3>
-              <p>
-                A lead reaches out. Hours pass. By the time you respond, they've already booked your competitor.
-                <b>Speed wins deals — silence loses them.</b>
-              </p>
-            </div>
-            <div class="leak-card rv d4">
-              <div class="leak-num">LEAK / 04</div>
-              <div class="leak-icon">⭐</div>
-              <h3>The Trust Gap</h3>
-              <p>
-                Thin reviews and a quiet Google profile make buyers hesitate.
-                <b>People don't buy from businesses they can't verify</b> — they buy from the one with proof.
-              </p>
-            </div>
-            <div class="leak-card rv d5">
-              <div class="leak-num">LEAK / 05</div>
-              <div class="leak-icon">🌫️</div>
-              <h3>The Fuzzy Offer</h3>
-              <p>
-                If a stranger can't tell what you do, who it's for, and why you're the pick — in five seconds flat —
-                <b>confusion sends them somewhere clearer.</b>
-              </p>
-            </div>
+        <!-- ============ TICKER ============ -->
+        <div class="ticker">
+          <div class="ticker-track" id="tickerTrack">
+            <span>◆ SLOW FOLLOW-UP KILLS <b>UP TO 40%</b> OF INBOUND LEADS</span>
+            <span>◆ <b>75%</b> OF PEOPLE JUDGE A BUSINESS BY ITS WEBSITE</span>
+            <span>◆ MOST VISITORS DECIDE IN <b>UNDER 5 SECONDS</b></span>
+            <span>◆ YOUR COMPETITORS ARE <b>ONE GOOGLE SEARCH</b> AWAY</span>
+            <span>◆ REVIEWS DRIVE <b>THE MAJORITY</b> OF LOCAL BUYING DECISIONS</span>
           </div>
-        </section>
+        </div>
 
-        <!-- ============ COST COUNTER ============ -->
-        <section>
-          <div class="burnbox rv">
-            <div class="sec-eyebrow">While You've Been On This Page</div>
-            <div class="big-count" id="burnCount">$0</div>
-            <div class="cap">Estimated revenue leaked by the average unoptimized service business*</div>
-            <p class="foot">
-              That's the thing about leaks — they don't announce themselves. They just quietly compound, month after
-              month, while everything <b>feels</b> "fine." Your Gap Score puts a number on it so you can stop the
-              bleeding.
+        <div class="wrap">
+          <!-- ============ THE 5 LEAKS ============ -->
+          <section>
+            <div class="sec-eyebrow rv">The Diagnosis</div>
+            <h2 class="rv d1">Five Places Your Money Is <span class="hl">Walking Out The Door</span></h2>
+            <p class="lead rv d2">
+              Every service business leaks from the same five places. Most owners can't see them — because you can't see
+              the customers who never called. Your Gap Score measures all five.
             </p>
-          </div>
-        </section>
 
-        <!-- ============ HOW IT WORKS ============ -->
-        <section>
-          <div class="sec-eyebrow rv">Dead Simple</div>
-          <h2 class="rv d1">How Your Gap Score Works</h2>
-          <p class="lead rv d2">No sales call. No fluff. Just an honest look under the hood of your business.</p>
+            <div class="leak-grid">
+              <div class="leak-card rv d1">
+                <div class="leak-num">LEAK / 01</div>
+                <div class="leak-icon">🕳️</div>
+                <h3>The Invisible Website</h3>
+                <p>
+                  People land on your site, look for a reason to trust you, don't find one fast enough — and hit the
+                  back button. <b>You never even know they came.</b>
+                </p>
+              </div>
+              <div class="leak-card rv d2">
+                <div class="leak-num">LEAK / 02</div>
+                <div class="leak-icon">📉</div>
+                <h3>The Traffic Drought</h3>
+                <p>
+                  You're great at what you do, but the people searching for it right now are finding someone else.
+                  <b>Being the best means nothing if you're invisible.</b>
+                </p>
+              </div>
+              <div class="leak-card rv d3">
+                <div class="leak-num">LEAK / 03</div>
+                <div class="leak-icon">⏱️</div>
+                <h3>The Slow Reply</h3>
+                <p>
+                  A lead reaches out. Hours pass. By the time you respond, they've already booked your competitor.
+                  <b>Speed wins deals — silence loses them.</b>
+                </p>
+              </div>
+              <div class="leak-card rv d4">
+                <div class="leak-num">LEAK / 04</div>
+                <div class="leak-icon">⭐</div>
+                <h3>The Trust Gap</h3>
+                <p>
+                  Thin reviews and a quiet Google profile make buyers hesitate.
+                  <b>People don't buy from businesses they can't verify</b> — they buy from the one with proof.
+                </p>
+              </div>
+              <div class="leak-card rv d5">
+                <div class="leak-num">LEAK / 05</div>
+                <div class="leak-icon">🌫️</div>
+                <h3>The Fuzzy Offer</h3>
+                <p>
+                  If a stranger can't tell what you do, who it's for, and why you're the pick — in five seconds flat —
+                  <b>confusion sends them somewhere clearer.</b>
+                </p>
+              </div>
+            </div>
+          </section>
 
-          <div class="steps">
-            <div class="step rv d1">
-              <div class="step-badge">1</div>
-              <h3>Answer Quick Questions</h3>
-              <p>
-                Tell us how your business runs today — your website, your leads, your follow-up, your reviews. No prep
-                needed, no wrong answers.
+          <!-- ============ COST COUNTER ============ -->
+          <section>
+            <div class="burnbox rv">
+              <div class="sec-eyebrow">While You've Been On This Page</div>
+              <div class="big-count" id="burnCount">$0</div>
+              <div class="cap">Estimated revenue leaked by the average unoptimized service business*</div>
+              <p class="foot">
+                That's the thing about leaks — they don't announce themselves. They just quietly compound, month after
+                month, while everything <b>feels</b> "fine." Your Gap Score puts a number on it so you can stop the
+                bleeding.
               </p>
-              <span class="time">⏱ ~2 MINUTES</span>
             </div>
-            <div class="step rv d2">
-              <div class="step-badge">2</div>
-              <h3>Get Your Score Instantly</h3>
-              <p>
-                See your overall Gap Score plus a breakdown across all five leak zones — so you know exactly where
-                you're strong and where you're bleeding.
-              </p>
-              <span class="time">⏱ INSTANT</span>
-            </div>
-            <div class="step rv d3">
-              <div class="step-badge">3</div>
-              <h3>Know Exactly What To Fix First</h3>
-              <p>
-                Your results flag your most expensive leaks in priority order. No guessing, no overwhelm — just clarity
-                on the next right move.
-              </p>
-              <span class="time">⏱ CLARITY, FINALLY</span>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- ============ GUARANTEE / CREDIBILITY ============ -->
-        <section>
-          <div class="guarantee">
-            <div class="rv">
-              <div class="shield">
-                <div class="shield-core">
-                  <div class="n">15</div>
-                  <div class="t">New Customers<br />In 60 Days</div>
+          <!-- ============ HOW IT WORKS ============ -->
+          <section>
+            <div class="sec-eyebrow rv">Dead Simple</div>
+            <h2 class="rv d1">How Your Gap Score Works</h2>
+            <p class="lead rv d2">No sales call. No fluff. Just an honest look under the hood of your business.</p>
+
+            <div class="steps">
+              <div class="step rv d1">
+                <div class="step-badge">1</div>
+                <h3>Answer Quick Questions</h3>
+                <p>
+                  Tell us how your business runs today — your website, your leads, your follow-up, your reviews. No prep
+                  needed, no wrong answers.
+                </p>
+                <span class="time">⏱ ~2 MINUTES</span>
+              </div>
+              <div class="step rv d2">
+                <div class="step-badge">2</div>
+                <h3>Get Your Score Instantly</h3>
+                <p>
+                  See your overall Gap Score plus a breakdown across all five leak zones — so you know exactly where
+                  you're strong and where you're bleeding.
+                </p>
+                <span class="time">⏱ INSTANT</span>
+              </div>
+              <div class="step rv d3">
+                <div class="step-badge">3</div>
+                <h3>Know Exactly What To Fix First</h3>
+                <p>
+                  Your results flag your most expensive leaks in priority order. No guessing, no overwhelm — just
+                  clarity on the next right move.
+                </p>
+                <span class="time">⏱ CLARITY, FINALLY</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ GUARANTEE / CREDIBILITY ============ -->
+          <section>
+            <div class="guarantee">
+              <div class="rv">
+                <div class="shield">
+                  <div class="shield-core">
+                    <div class="n">15</div>
+                    <div class="t">New Customers<br />In 60 Days</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="sec-eyebrow rv">Why Trust Us With The Diagnosis</div>
+                <h2 class="rv d1">We Put Our Money Where Our <span class="hl">Mouth Is</span></h2>
+                <p class="lead rv d2">
+                  WEBRANDIT is the agency that guarantees results — 15 new paying customers in 60 days for our clients,
+                  or they don't pay. We can only make that promise because we know exactly where businesses leak and
+                  exactly how to plug it.
+                </p>
+                <div class="g-points">
+                  <div class="g-point rv d2">
+                    <div class="chk">✓</div>
+                    <p>
+                      <b>Built for service businesses</b> — contractors, clinics, local pros. Not generic "digital
+                      marketing" theory.
+                    </p>
+                  </div>
+                  <div class="g-point rv d3">
+                    <div class="chk">✓</div>
+                    <p>
+                      <b>Diagnosis before prescription.</b> The Gap Score is the same lens we use before taking on any
+                      client.
+                    </p>
+                  </div>
+                  <div class="g-point rv d4">
+                    <div class="chk">✓</div>
+                    <p>
+                      <b>Zero obligation.</b> Your score and breakdown are yours to keep. What you do with them is up to
+                      you.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              <div class="sec-eyebrow rv">Why Trust Us With The Diagnosis</div>
-              <h2 class="rv d1">We Put Our Money Where Our <span class="hl">Mouth Is</span></h2>
-              <p class="lead rv d2">
-                WEBRANDIT is the agency that guarantees results — 15 new paying customers in 60 days for our clients, or
-                they don't pay. We can only make that promise because we know exactly where businesses leak and exactly
-                how to plug it.
-              </p>
-              <div class="g-points">
-                <div class="g-point rv d2">
-                  <div class="chk">✓</div>
-                  <p>
-                    <b>Built for service businesses</b> — contractors, clinics, local pros. Not generic "digital
-                    marketing" theory.
-                  </p>
-                </div>
-                <div class="g-point rv d3">
-                  <div class="chk">✓</div>
-                  <p>
-                    <b>Diagnosis before prescription.</b> The Gap Score is the same lens we use before taking on any
-                    client.
-                  </p>
-                </div>
-                <div class="g-point rv d4">
-                  <div class="chk">✓</div>
-                  <p>
-                    <b>Zero obligation.</b> Your score and breakdown are yours to keep. What you do with them is up to
-                    you.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <!-- ============ FINAL CTA ============ -->
-        <section class="final">
-          <div class="sec-eyebrow rv">One Last Thing</div>
-          <h2 class="rv d1">You Can't Fix a Leak <span class="hl">You Can't See</span></h2>
-          <p class="lead rv d2">
-            Two minutes from now, you'll know more about why your business grows — or doesn't — than most owners learn
-            in years. Free. Instant. Brutally honest.
-          </p>
-          <button class="cta-main rv d3" onclick="openModal()">
-            Get My Free Gap Score
-            <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
-              <path
-                d="M12 1L19 8L12 15M19 8H1"
-                stroke="#0a0a0c"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-          <div class="cta-sub rv d4">Takes <b>2 minutes</b> · Instant results · <b>100% free</b></div>
-        </section>
+          <!-- ============ FINAL CTA ============ -->
+          <section class="final">
+            <div class="sec-eyebrow rv">One Last Thing</div>
+            <h2 class="rv d1">You Can't Fix a Leak <span class="hl">You Can't See</span></h2>
+            <p class="lead rv d2">
+              Two minutes from now, you'll know more about why your business grows — or doesn't — than most owners learn
+              in years. Free. Instant. Brutally honest.
+            </p>
+            <button class="cta-main rv d3" onclick="openModal()">
+              Get My Free Gap Score
+              <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
+                <path
+                  d="M12 1L19 8L12 15M19 8H1"
+                  stroke="#0a0a0c"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div class="cta-sub rv d4">Takes <b>2 minutes</b> · Instant results · <b>100% free</b></div>
+          </section>
+        </div>
+
+        <footer>
+          <div class="wrap"><b>WEBRANDIT</b> — WEB DESIGN & GROWTH MARKETING · © 2026 ALL RIGHTS RESERVED</div>
+        </footer>
       </div>
-
-      <footer>
-        <div class="wrap"><b>WEBRANDIT</b> — WEB DESIGN & GROWTH MARKETING · © 2026 ALL RIGHTS RESERVED</div>
-      </footer>
     </main>
 
     <!-- ============ MODAL ============ -->
@@ -1535,6 +1602,39 @@
           document.body.appendChild(e);
         }
       }
+
+      /* ================= HERO SCROLL CINEMA ================= */
+      (function () {
+        const hero = document.getElementById("heroCin");
+        if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        let ticking = false;
+        function update() {
+          ticking = false;
+          const range = hero.offsetHeight * 0.85;
+          const y = window.scrollY;
+          const p = Math.min(1, Math.max(0, y / range));
+          const eased = p * p * (3 - 2 * p); // smoothstep
+          hero.style.transform =
+            "translateY(" +
+            Math.min(y, range) * 0.32 +
+            "px) scale(" +
+            (1 - 0.16 * eased) +
+            ") rotate(" +
+            -3.5 * eased +
+            "deg)";
+          hero.style.filter = "brightness(" + (1 - 0.55 * eased) + ")";
+          hero.style.borderRadius = 30 * eased + "px";
+        }
+        function onScroll() {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(update);
+          }
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+        update();
+      })();
     </script>
   </body>
 </html>
